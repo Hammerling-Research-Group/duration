@@ -23,10 +23,10 @@ if (commandArgs()[1] == "RStudio"){
 
 # Select experiment to run:
 #   1) ADED 2022 controlled release experiment
-#   2) ADED 2023 controlled release experiment
+#   2) ADED 2023 controlled release experiment (short / toy)
 #   3) Stanford controlled release experiment
 #   4) AMI case study
-run.type <- 1
+run.type <- 2
 
 
 
