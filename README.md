@@ -1,5 +1,5 @@
 # duration
-*Production code for CMS duration estimation project.*
+*Production code CMS duration estimation*
 
 ## Estimating Methane Emission Durations
 
