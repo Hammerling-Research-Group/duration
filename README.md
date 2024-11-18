@@ -7,6 +7,8 @@ This repository contains code used to estimate methane emission durations using 
 
 The accompanying paper can be found here: https://doi.org/10.1021/acs.estlett.4c00687
 
+**Of note:** *The data included in the `./input_data/ subdirectory are toy data shortened for quick running of the code. This is meant for demonstration purposes only to get users started with the code and to learn the required structure of input data, rather than for full replication of the results in the above-linked paper.*
+
 ## Installation & Usage
 
 Though the current code is still largely in "research code" form, users are still encouraged to engage with it. 
