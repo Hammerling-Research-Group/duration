@@ -7,7 +7,7 @@ This repository contains code used to estimate methane emission durations using 
 
 The accompanying paper can be found here: https://doi.org/10.1021/acs.estlett.4c00687
 
-## Installation
+## Installation & Usage
 
 Though the current code is still largely in "research code" form, users are still encouraged to engage with it. 
 
@@ -25,18 +25,8 @@ $ cd Desktop
 $ git clone https://github.com/Hammerling-Research-Group/duration.git
 ```
 
-3. Move into the cloned `duration` directory:
+3. Once cloned, go into the `duration` folder and open `duration.Rproj` by double clicking it. This should open a new RStudio session, with `duration.Rproj` set as the root. 
 
-```bash
-$ cd duration
-```
-
-4. Once cloned, go into the `duration` folder and open `duration.Rproj` by double clicking it. This should open a new RStudio session, with `duration.Rproj` set as the root. 
-
-5. In the session, navigate to the `Files` tab and then open the `R` subdirectory.
+4. In the session, navigate to the `Files` tab and then open the `R` subdirectory.
      - Start by opening and running the `MAIN_1_estimate_durations.R` script
-     - Then, proceed to and run other scripts as interested
-  
-## Usage
-
-...
+     - Then, proceed to and source other scripts as interested
