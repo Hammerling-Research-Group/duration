@@ -3,7 +3,7 @@ Title: Estimate Emission Durations using Continuous Monitoring Sensors Systems
 Version: 0.1.0
 Authors@R: 
     c(
-    person("William", "Daniels", email = "wdaniels@mines.edu", role = c("aut", "cre")),
+    person("William", "Daniels", email = "wdaniels@mines.edu", role = "aut"),
     person("Philip", "Waggoner", email = "philip.waggoner@mines.edu", role = c("aut", "cre")),
     person("Dorit", "Hammerling", email = "hammerling@mines.edu", role = c("aut", "ths"))
     )
