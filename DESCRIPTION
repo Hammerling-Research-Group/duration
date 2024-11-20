@@ -1,0 +1,14 @@
+Package: duration
+Title: Estimate Emission Durations using Continuous Monitoring Sensors Systems
+Version: 0.1.0
+Authors@R: 
+    person("William", "Daniels", , "wdaniels@mines.edu", role = c("aut", "cre"))
+    person("Philip", "Waggoner", , "philip.waggoner@mines.edu", role = c("aut", "ctb"))
+    person("Dorit", "Hammerling", , "hammerling@mines.edu", role = c("aut", "ctb"))
+Description: Estimate emission durations using Continuous Monitoring Sensors (CMS)
+    systems, accounting for CMS non-detect times. The paper associated with this
+    package is published here: <https://doi.org/10.1021/acs.estlett.4c00687>.
+License: MIT
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.1
