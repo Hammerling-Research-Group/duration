@@ -14,7 +14,7 @@
 #' @examples
 #' estimate_durations(directory = "Desktop", plot = TRUE)
 estimate_durations <- function(data = system.file("input_data/ADED2023_short.rds", package = "duration"),
-                               directory,
+                               directory = NULL,
                                events = FALSE, 
                                plot = FALSE,
                                time = TRUE){
@@ -241,7 +241,7 @@ if (is.null(directory)) {
 }
 
 if (!dir.exists(output_dir)) {
-  dir.create(output_dir)
+  dir.create(output_dir, recursive = TRUE)
 }
 
 output_path <- file.path(output_dir, "duration_estimates.rds")
