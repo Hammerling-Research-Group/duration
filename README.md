@@ -22,14 +22,14 @@ library(duration)
 Now, you are free to use the latest version of the code, e.g., 
 
 ```r
-estimate_durations()
+estimate_durations(plot = TRUE)
 ```
 
 ## Some Notes to Consider
 
 The default values for all arguments are set to allow for simple usage without the need for adjustment. Yet, users could (should) at least adjust the `data`, by supplying real data, instead of the toy data packaged with the `duration` code, meant only for demo purposes. With that, the other arguments include: 
 
-  - `data`: Forward model output data. Format must match output from MAIN_1_simulate.R, which can be found at: <https://github.com/wsdaniels/DLQ/>
+  - `data`: Forward model output data. Format must match output from `MAIN_1_simulate.R` at: <https://github.com/wsdaniels/DLQ/>
   - `directory`: Location where results output is saved. If not specified, a directory is created and the location is shared with the user
   - `events`: Print the number of events per year? Default set to `FALSE`
   - `plot`: Return a plot of the distribution of average duration estimates by source? Default set to `FALSE`
