@@ -43,8 +43,9 @@ estimate_durations <- function(data = system.file("input_data/ADED2023_short.rds
   cli::cli_h1("Reading & cleaning data")
 
 # step 1: read in data
-#data <- read_rds(here("input_data", "ADED2023_forward_model_output_short.RData"))
+  #data <- read_rds(here("input_data", "ADED2023_forward_model_output_short.RData"))
 
+  data <- suppressWarnings(read_rds(data))
 
 # Pull out sensor observations and replace NA's that are not on edge of the time series with interpolated values
 obs <- na.approx(data$obs, na.rm = F)
