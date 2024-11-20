@@ -1,9 +1,230 @@
-# Define function to create a logarithmic spaced sequence (used later)
+#' @title Quietly checks, installs, then loads libraries needed to run the simulation
+#' @export
+using_packages <- function(...) {
+  libs <- unlist(list(...))
+  req <- unlist(lapply(libs, require, character.only = TRUE))
+  need <- libs[req == FALSE]
+  if(length(need) > 0){
+    install.packages(need)
+    lapply(need, require, character.only = TRUE)
+  }
+}
+
+#' @title Find spikes from DLQ code
+#' @export
+find.spikes <- function(
+    times, obs,
+    going.up.threshold = 0.25, # [ppm]
+    return.threshold = 5, # [%], must be on (0,100)
+    amp.threshold = 1, # [ppm]
+    cont.diff.threshold = 0.25, # [ppm]
+    cont.diff.num = 10 # [number of observations]
+){
+  
+  
+  # Prep vector to hold event indices
+  events <- rep(NA, length(obs))
+  
+  # Count is increased every time there is a new event
+  count <- 0
+  
+  # Set the "in event" flag to false before looping through data
+  in.event <- F
+  
+  # Skip leading NAs
+  start.ind <- min(which(!is.na(obs))) + 1
+  
+  # Indicator for if loop has reached the last observation
+  last.ob <- F
+  
+  # Running background estimate
+  background <- NA
+  
+  # Loop through the observations
+  for (i in start.ind:length(obs)){
+    
+    # Is this the last observation?
+    if (i == length(obs)){last.ob <- T}
+    
+    # update current index and last index to deal with NA gaps
+    if (is.na(obs[i]) & !is.na(obs[i-1])){
+      last.ind <- i-1
+      next
+    } else if (is.na(obs[i]) & is.na(obs[i-1])){
+      next
+    } else if (!is.na(obs[i]) & is.na(obs[i-1])){
+      current.ind <- i
+    } else {
+      current.ind <- i
+      last.ind <- i-1
+    }
+    
+    # Branch for when you are not currently in an event
+    if (in.event == F){
+      
+      # Compute difference between this observation and the last
+      current.diff <- obs[current.ind] - obs[last.ind]
+      
+      # If on last ob, only enter event if difference is greater than
+      # both going.up.threshold and amp.threshold, as there will be no
+      # other check for amplitude. Otherwise, just use going.up.threshold.
+      threshold.to.use <- ifelse(last.ob,
+                                 max(going.up.threshold, amp.threshold),
+                                 going.up.threshold)
+      
+      # If difference is greater than threshold value, enter an event
+      if (current.diff > threshold.to.use){
+        in.event <- T
+        count <- count + 1
+        event.obs <- obs[current.ind]
+        events[current.ind] <- count
+        background <- obs[last.ind]
+      }
+      
+      # Branch for when you are currently in an event
+    } else {
+      
+      # Compute the maximum value of this event up to time step i and with
+      # the background removed. We assume that the last observation before
+      # the large difference is the background concentration.
+      current.max <- max(event.obs) - background
+      
+      # Compute the current background corrected observation.
+      current.ob <- obs[current.ind] - background
+      
+      # End event if the current observation has returned to return.threshold 
+      # percent of the background corrected maximum value or if it is the 
+      # last observation
+      if ((current.ob < 2*background & current.ob < return.threshold * current.max / 100) | last.ob){
+        
+        # End event
+        in.event <- F
+        
+        # Fill in any gaps due to NAs in observations
+        event.seq <- seq(min(which(events == count), na.rm=T),
+                         max(which(events == count), na.rm=T))
+        events[event.seq] <- count
+        
+        # Compute background corrected event amplitude.
+        # Use mean of first and last observation as the background estimate,
+        # unless the event includes the last observation, than use just first ob
+        if (last.ob){
+          event.size <- max(event.obs) - background
+        } else {
+          event.size <- max(event.obs) - mean(c(background, obs[current.ind]))
+        }
+        
+        # If the background corrected amplitude is less than amplitude threshold,
+        # then remove this event
+        if (event.size < amp.threshold){
+          events[events == count] <- NA
+          count <- count - 1
+        }
+        
+        # Branch for if the event is not ended
+      } else {
+        
+        # Add current observation to vector of observations in this event
+        event.obs <- c(event.obs, obs[current.ind])
+        
+        # Add this event number to the record of events
+        events[i] <- count
+        
+        # Check for long stretch of small differences. This indicates that the
+        # return threshold was not triggered but should have been.
+        if (length(event.obs) > cont.diff.num){
+          
+          # Compute first index of observations within this event that should
+          # be considered in this check. Only consider cont.diff.num observations.
+          window.start <- length(event.obs) - cont.diff.num
+          
+          # Grab the observations that should be considered
+          obs.in.window <- event.obs[window.start:length(event.obs)]
+          
+          # If the absolute value of the differences are all below 
+          # cont.diff.threshold, then end the event here.
+          if (all(abs(diff(obs.in.window)) < cont.diff.threshold)){
+            
+            # End event
+            in.event <- F
+            
+            # Fill in any gaps due to NAs in observations
+            event.seq <- seq(min(which(events == count), na.rm=T),
+                             max(which(events == count), na.rm=T))
+            events[event.seq] <- count
+            
+            # Compute background corrected event amplitude
+            # Use mean of first and last observation as the background estimate
+            event.size <- max(event.obs) - mean(c(background, obs[current.ind]))
+            
+            # If the background corrected amplitude is less than amplitude threshold,
+            # then remove this event
+            if (event.size < amp.threshold){
+              events[events == count] <- NA
+              count <- count - 1
+              
+              # Otherwise, remove the observations that are not changing
+            } else {
+              events[seq(current.ind-cont.diff.num+1, current.ind)] <- NA
+            }
+            
+          } # end if (all(abs(diff(obs.in.window)) < cont.diff.threshold))
+        } # end if (length(event.obs) > cont.diff.num)
+      } # end if (current.ob < return.threshold * current.max / 100)
+    } # end if (in.event == F)
+  } # end loop through observations
+  
+  
+  # Save everything
+  filtered.events <- data.frame(time = times,
+                                events = events)
+  
+  return(filtered.events)
+  
+}
+
+#' @title Plot distributions of avg durations by source
+#' @export
+plot_durations <- function(durations_list, type = c("histogram", "density")) {
+  durations_df <- do.call(rbind, lapply(names(durations_list), function(name) {
+    data.frame(Source = name, 
+               Average_Duration = durations_list[[name]])
+  }))
+  
+  if ("histogram" %in% type){
+    p <- ggplot(durations_df, aes(x = Average_Duration, fill = Source)) +
+      geom_histogram(binwidth = 1, color = "black", alpha = 0.7) +
+      facet_wrap(~ Source) +
+      labs(title = "Distribution of Average Durations by Source",
+           x = "Average Duration",
+           y = "Frequency",
+           fill = "Source") +
+      theme_bw()
+  } else if ("density" %in% type){
+    p <- ggplot(durations_df, aes(x = Average_Duration, fill = Source)) +
+      geom_density(color = "black", alpha = 0.7) +
+      facet_wrap(~ Source) +
+      labs(title = "Distribution of Average Durations by Source",
+           x = "Average Duration",
+           y = "Density",
+           fill = "Source") +
+      theme_bw()
+  }
+  
+  return(p)
+}
+
+
+
+#' @title Create a logarithmic spaced sequence
+#' @export
 lseq <- function(from, to, length.out) {
   exp(seq(log(from), log(to), length.out = length.out))
 }
 
 
+#' @title Get sensor arrangement
+#' @export
 get.sensor.arrangement <- function(run.type, which.arrangement, data, z){
   
   # Sensor arrangements for ADED 2022
@@ -272,9 +493,9 @@ get.sensor.arrangement <- function(run.type, which.arrangement, data, z){
   
 }
 
-
+#' @title Remove background from concentration time series
+#' @export
 remove.background <- function(times, obs, going.up.threshold, amp.threshold, gap.time){
-  # Removes background from concentration time series
   # obs: matrix with columns representing the different CMS sensors and
   #      rows representing the time steps
   
@@ -297,8 +518,7 @@ remove.background <- function(times, obs, going.up.threshold, amp.threshold, gap
     spikes <- find.spikes(obs = trimmed.obs,
                           times = trimmed.times,
                           going.up.threshold = going.up.threshold,
-                          amp.threshold = amp.threshold,
-                          make.plot = F)
+                          amp.threshold = amp.threshold)
     
     # Add points immediately before and after the spike to the spike mask
     # This better captures the full event, as there is some delay between the 
@@ -391,9 +611,9 @@ remove.background <- function(times, obs, going.up.threshold, amp.threshold, gap
 }
 
 
+#' @title Create naive emission durations that do not account for CMS non-detect times
+#' @export
 perform.event.detection <- function(times, max.obs, gap.time, length.threshold){
-  # Creates the naive emission durations that do not account for CMS non-detect times
-  
   # Create data frame with time steps and event mask
   spikes <- data.frame(time = times, events = max.obs > 0)
   
@@ -467,9 +687,9 @@ perform.event.detection <- function(times, max.obs, gap.time, length.threshold){
 
 
 
+#' @title Estimate emission source for each naive event
+#' @export
 perform.localization <- function(spikes, obs, sims){
-  # Estimates emission source for each naive event
-  
   source.names <- names(sims)
   
   # Pull event "event numbers" that uniquely identify each naive event
@@ -560,10 +780,9 @@ perform.localization <- function(spikes, obs, sims){
 
 
 
-
-perform.quantification <- function(times, spikes, obs, sims, loc.est.all.events, print.report = F){
-  # Estimates emission rate for each naive event
-  
+#' @title Estimate emission rate for each naive event
+#' @export
+perform.quantification <- function(times, spikes, obs, sims, loc.est.all.events){
   # Pull event "event numbers" that uniquely identify each naive event
   event.nums <- na.omit(unique(spikes$events))
   
@@ -578,10 +797,13 @@ perform.quantification <- function(times, spikes, obs, sims, loc.est.all.events,
   
   # Loop through events
   for (t in 1:n.ints){
-    
-    if (print.report){
-      print(paste0("Quantification step: ", t, " / ", n.ints))
-    }
+        
+    cli::cli_alert_info(c(
+      "Quantification step: ",
+      "{prettyunits::pretty_num(t)}",
+      "/ ",
+      "{prettyunits::pretty_num(n.ints)}",
+      "finished"))
     
     # Mask in this event
     this.mask <- seq(min(which(spikes$events == event.nums[t])),
@@ -609,8 +831,8 @@ perform.quantification <- function(times, spikes, obs, sims, loc.est.all.events,
       # Find spikes in both predictions and observations.
       # We will only use data in which both a observation and prediction is in a spike
       # to estimate the emission rate. This reduces impact of forward model inadequacies.
-      preds.spikes <- find.spikes(event.times, these.preds, amp.threshold = 1, make.plot = F)
-      obs.spikes   <- find.spikes(event.times, these.obs,   amp.threshold = 1, make.plot = F)
+      preds.spikes <- find.spikes(event.times, these.preds, amp.threshold = 1)
+      obs.spikes   <- find.spikes(event.times, these.obs,   amp.threshold = 1)
       
       # Mask for times in which both preds and obs are in a spike
       both.in.spike.mask <- !is.na(preds.spikes$events) & !is.na(obs.spikes$events)
@@ -690,10 +912,9 @@ perform.quantification <- function(times, spikes, obs, sims, loc.est.all.events,
 }
 
 
+#' @title Scale simulated concentrations by the estimated emission rate of the nearest naive event
+#' @export
 scale.sims <- function(times, sims, spikes, loc.est.all.events, rate.est.all.events){
-  # Scales simulated concentrations by the estimated emission rate of the nearest 
-  # naive event
-  
   # Pull event "event numbers" that uniquely identify each naive event
   event.nums <- na.omit(unique(spikes$events))
   
@@ -754,10 +975,9 @@ scale.sims <- function(times, sims, spikes, loc.est.all.events, rate.est.all.eve
 }
 
 
+#' @title Determine which time periods have information from the CMS sensors and which do not
+#' @export
 create.info.mask <- function(times, sims, gap.time = 0, length.threshold = 15){
-  # Determines which time periods have information from the CMS sensors and 
-  # which do not.
-  
   # Initialize variables to hold information mask
   info.list <- vector(mode = "list", length = length(sims))
   names(info.list) <- names(sims)
@@ -786,11 +1006,9 @@ create.info.mask <- function(times, sims, gap.time = 0, length.threshold = 15){
 }
 
 
-
-
+#' @title Determine which naive events have non-zero probability of being combined with their neighbors
+#' @export
 get.combine.info <- function(spikes, info.list, loc.est.all.events, tz){
-  # Figure out which naive events have non-zero probability of being combined with their neighbors
-  
   # Pull event "event numbers" that uniquely identify each naive event
   event.nums <- na.omit(unique(spikes$events))
   
@@ -963,12 +1181,9 @@ get.combine.info <- function(spikes, info.list, loc.est.all.events, tz){
 }
 
 
-
-
-
+#' @title Get distribution of possible durations for a given naive event
+#' @export
 get.durations <- function(spikes, info.list, loc.est.all.events, rate.est.all.events, tz){
-  # Get distribution of possible durations for a given naive event
-  
   source.names <- names(info.list)
   
   # Get information about which events can be combined with their neighbors
@@ -1159,15 +1374,9 @@ get.durations <- function(spikes, info.list, loc.est.all.events, rate.est.all.ev
 }
 
 
-
-
-
-
-
-
+#' @title Get number of events by source, accounting for possibility to recombine events
+#' @export
 get.event.counts <- function(spikes, info.list, loc.est.all.events, rate.est.all.events, tz){
-  # Get number of events by source, accounting for possibility to recombine events
-  
   source.names <- names(info.list)
   
   # Get information about which events can be combined with their neighbors
