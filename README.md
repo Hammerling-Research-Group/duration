@@ -11,24 +11,26 @@ The accompanying paper can be found here: https://doi.org/10.1021/acs.estlett.4c
 
 ## Installation & Usage
 
-Though the current code is still largely in "research code" form, users are still encouraged to engage with it. 
+Access the latest (dev) version of this code:
 
-To do so, the simplest approach is to clone the repo and work from the `duration` directory. 
+```r
+devtools::install_github("Hammerling-Research-Group/duration")
 
-1. Set your desired directory from which to work. E.g., for your Desktop:
-
-```bash
-$ cd Desktop
+library(duration)
 ```
 
-2. Clone and store `duration` at the desired location:
+Now, you are free to use the latest version of the code, e.g., 
 
-```bash
-$ git clone https://github.com/Hammerling-Research-Group/duration.git
+```r
+estimate_durations()
 ```
 
-3. Once cloned, go into the `duration` folder and open `duration.Rproj` by double clicking it. This should open a new RStudio session, with `duration.Rproj` set as the root. 
+## Some Notes to Consider
 
-4. In the session, navigate to the `Files` tab and then open the `R` subdirectory.
-     - Start by opening and running the `MAIN_1_estimate_durations.R` script
-     - Then, proceed to and source other scripts as interested
+The default values for all arguments are set to allow for simple usage without the need for adjustment. Yet, users could (should) at least adjust the `data`, by supplying real data, instead of the toy data packaged with the `duration` code, meant only for demo purposes. With that, the other arguments include: 
+
+  - `data`: Forward model output data. Format must match output from MAIN_1_simulate.R, which can be found at: <https://github.com/wsdaniels/DLQ/>
+  - `directory`: Location where results output is saved. If not specified, a directory is created and the location is shared with the user
+  - `events`: Print the number of events per year? Default set to `FALSE`
+  - `plot`: Return a plot of the distribution of average duration estimates by source? Default set to `FALSE`
+  - `time`: Return the timing of the simulation? Default set to `TRUE`
