@@ -7,7 +7,9 @@
 estimate_durations(data, directory, events, plot, time)
 }
 \arguments{
-\item{data}{List. Forward model output data. Format must match output from MAIN_1_simulate.R, which can be found at: \url{https://github.com/wsdaniels/DLQ/}. Default set to shortened "toy" set from the 2023 ADED controlled release experiment (embedded in \code{duration} package).}
+\item{data}{List. Forward model output data. The format must match that of the sample (default) shortened data from the 2023 ADED controlled release experiment, which is released with the \code{duration} package.}
+
+\item{tz}{Character. Time zone. Default set to \code{America/Denver}.}
 
 \item{directory}{Character. Location where results output is saved. If not specified, a directory is created and the location is shared with the user.}
 
@@ -18,7 +20,7 @@ estimate_durations(data, directory, events, plot, time)
 \item{time}{Logical. Return the timing of the simulation. Default set to \code{TRUE}.}
 }
 \value{
-Listed output estimated durations by source. Saved in a newly created directory (\code{Results Output}).
+Listed output of estimated durations by emission source. Saved in a newly created directory (\code{Results Output}).
 }
 \description{
 Estimate emission durations using CMS, accounting for CMS non-detect times
