@@ -1,6 +1,9 @@
 # duration
 *Production code CMS duration estimation*
 
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/duration)](http://cran.r-project.org/package=duration)
+[![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
+
 ## Estimating Methane Emission Durations
 
 This repository contains code used to estimate methane emission durations using concentration observations from a network of point-in-space continuous monitoring systems. The scripts include: 
