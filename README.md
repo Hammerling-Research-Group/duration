@@ -27,7 +27,7 @@ library(duration)
 
 Once installed and loaded, users should start with the core function, which produces duration estimates by emission source. 
 
-For example, run the following line to generate emission duration estimates, return a plot of the distributions of duration estimates by source using the supplied "toy" data, and store results on my Desktop (*of note: full output is saved by default, the location of which is shared with the user*): 
+For example, run the following line to generate emission duration estimates, return a plot of the distributions of duration estimates by source using the supplied "toy" data, and store results on your Desktop (*of note: full output is saved by default, the location of which is shared with the user*): 
 
 ```r
 estimate_durations(plot = TRUE, directory = "Desktop")
