@@ -198,6 +198,8 @@ estimate_durations <- function(data = system.file("input_data/ADED2023_short.rds
   output_path <- file.path(output_dir, "duration_estimates.rds")
   readr::write_rds(duration_estimates, output_path)
 
+  cli::cli_alert_success("Complete")
+  
     }
   )
   

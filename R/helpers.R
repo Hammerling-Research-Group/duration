@@ -796,14 +796,14 @@ perform.quantification <- function(times, spikes, obs, sims, loc.est.all.events)
   all.q.vals <- vector(mode = "list", length = n.ints)
   
   # Loop through events
+  #cli::cli_progress_bar("Performing quantification", total = n.ints) 
+  
+  cli::cli_progress_bar(
+    total = n.ints,
+    format = "Performing quantification {cli::pb_bar} {cli::pb_percent} | Step: {cli::pb_current}/{cli::pb_total} | ETA: {cli::pb_eta}"
+  )
+  
   for (t in 1:n.ints){
-        
-    cli::cli_alert_info(c(
-      "Quantification step: ",
-      "{prettyunits::pretty_num(t)}",
-      "/ ",
-      "{prettyunits::pretty_num(n.ints)}",
-      "finished"))
     
     # Mask in this event
     this.mask <- seq(min(which(spikes$events == event.nums[t])),
@@ -903,7 +903,11 @@ perform.quantification <- function(times, spikes, obs, sims, loc.est.all.events)
       all.q.vals[[t]] <- NA
     }
     
+    cli::cli_progress_update()
+    
   } # End loop through events
+  
+  cli::cli_progress_done()
   
   names(all.q.vals) <- loc.est.all.events
   
