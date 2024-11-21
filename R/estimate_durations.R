@@ -209,7 +209,7 @@ estimate_durations <- function(data = system.file("input_data/ADED2023_short.rds
     cli::cli_h1("Timing")
     
     cli::cli_alert_info(c(
-      "The simulation took ",
+      "The process took ",
       "{prettyunits::pretty_sec(final_time)} ",
       "to run"))
   }
