@@ -1,0 +1,1 @@
+utils::globalVariables(c("Average_Duration", "Source"))

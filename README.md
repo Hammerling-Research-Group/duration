@@ -20,6 +20,8 @@ The accompanying paper can be found here: https://doi.org/10.1021/acs.estlett.4c
 Access the latest (dev) version:
 
 ```r
+#install.packages("devtools") # if needed on first usage
+
 devtools::install_github("Hammerling-Research-Group/duration")
 
 library(duration)

@@ -10,7 +10,19 @@ Authors@R:
 Description: Estimate emission durations using Continuous Monitoring Sensors (CMS)
     systems, accounting for CMS non-detect times. The paper associated with this
     package is published here: <https://doi.org/10.1021/acs.estlett.4c00687>.
-License: MIT
+License: MIT + file LICENSE
 Encoding: UTF-8
+Imports: 
+    lubridate,
+    readr,
+    ggplot2,
+    zoo,
+    cli 
+Suggests: 
+    tidyverse,
+    scales,
+    tools,
+    prettyunits
+URL: https://github.com/Hammerling-Research-Group/duration
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.1

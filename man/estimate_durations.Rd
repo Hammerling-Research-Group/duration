@@ -4,7 +4,7 @@
 \alias{estimate_durations}
 \title{Estimate emission durations using CMS, accounting for CMS non-detect times}
 \usage{
-estimate_durations(data, directory, events, plot, time)
+estimate_durations(data, tz, directory, events, plot, time)
 }
 \arguments{
 \item{data}{List. Forward model output data. The format must match that of the sample (default) shortened data from the 2023 ADED controlled release experiment, which is released with the \code{duration} package.}

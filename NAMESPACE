@@ -1,4 +1,6 @@
 importFrom(lubridate, "%within%")
+importFrom("stats", "cor", "na.omit", "quantile")
+importFrom("utils", "install.packages")
 export(using_packages)
 export(find.spikes)
 export(plot_durations)

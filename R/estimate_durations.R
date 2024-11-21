@@ -1,6 +1,6 @@
 #' @title Estimate emission durations using CMS, accounting for CMS non-detect times
 #' 
-#' @usage estimate_durations(data, directory, events, plot, time)
+#' @usage estimate_durations(data, tz, directory, events, plot, time)
 #' @param data List. Forward model output data. The format must match that of the sample (default) shortened data from the 2023 ADED controlled release experiment, which is released with the \code{duration} package.
 #' @param tz Character. Time zone. Default set to \code{America/Denver}.
 #' @param directory Character. Location where results output is saved. If not specified, a directory is created and the location is shared with the user.
@@ -29,7 +29,6 @@ estimate_durations <- function(data = system.file("input_data/ADED2023_short.rds
         "scales",
         "prettyunits",
         "cli",
-        "tools",
         "tidyverse")
     )
   )

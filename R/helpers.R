@@ -192,23 +192,23 @@ plot_durations <- function(durations_list, type = c("histogram", "density")) {
   }))
   
   if ("histogram" %in% type){
-    p <- ggplot(durations_df, aes(x = Average_Duration, fill = Source)) +
-      geom_histogram(binwidth = 1, color = "black", alpha = 0.7) +
-      facet_wrap(~ Source) +
-      labs(title = "Distribution of Average Durations by Source",
-           x = "Average Duration",
-           y = "Frequency",
-           fill = "Source") +
-      theme_bw()
+    p <- ggplot2::ggplot(durations_df, ggplot2::aes(x = Average_Duration, fill = Source)) +
+      ggplot2::geom_histogram(binwidth = 1, color = "black", alpha = 0.7) +
+      ggplot2::facet_wrap(~ Source) +
+      ggplot2::labs(title = "Distribution of Average Durations by Source",
+                    x = "Average Duration",
+                    y = "Frequency",
+                    fill = "Source") +
+      ggplot2::theme_bw()
   } else if ("density" %in% type){
-    p <- ggplot(durations_df, aes(x = Average_Duration, fill = Source)) +
-      geom_density(color = "black", alpha = 0.7) +
-      facet_wrap(~ Source) +
-      labs(title = "Distribution of Average Durations by Source",
-           x = "Average Duration",
-           y = "Density",
-           fill = "Source") +
-      theme_bw()
+    p <- ggplot2::ggplot(durations_df, ggplot2::aes(x = Average_Duration, fill = Source)) +
+      ggplot2::geom_density(color = "black", alpha = 0.7) +
+      ggplot2::facet_wrap(~ Source) +
+      ggplot2::labs(title = "Distribution of Average Durations by Source",
+                    x = "Average Duration",
+                    y = "Density",
+                    fill = "Source") +
+      ggplot2::theme_bw()
   }
   
   return(p)
@@ -554,7 +554,7 @@ remove.background <- function(times, obs, going.up.threshold, amp.threshold, gap
         time.diff <- difftime(this.spike.start.time, previous.spike.end.time, units = "mins")
         
         # Check gap
-        if (minutes(time.diff) < minutes(gap.time)){
+        if (lubridate::minutes(time.diff) < lubridate::minutes(gap.time)){
           spikes$events[this.spike] <- event.nums[i-1]
           event.nums[i] <- event.nums[i-1]
         }
@@ -796,8 +796,6 @@ perform.quantification <- function(times, spikes, obs, sims, loc.est.all.events)
   all.q.vals <- vector(mode = "list", length = n.ints)
   
   # Loop through events
-  #cli::cli_progress_bar("Performing quantification", total = n.ints) 
-  
   cli::cli_progress_bar(
     total = n.ints,
     format = "Performing quantification {cli::pb_bar} {cli::pb_percent} | Step: {cli::pb_current}/{cli::pb_total} | ETA: {cli::pb_eta}"
@@ -956,7 +954,7 @@ scale.sims <- function(times, sims, spikes, loc.est.all.events, rate.est.all.eve
     end.halfway.time   <- difftime(next.event.start, this.int[2], units = "hours")/2
     
     # Expand time interval of this event by the halfway times
-    this.int <- interval(this.int[1] - start.halfway.time, this.int[2] + end.halfway.time)
+    this.int <- lubridate::interval(this.int[1] - start.halfway.time, this.int[2] + end.halfway.time)
     
     # Mask in times for this event
     time.mask <- times %within% this.int
@@ -1066,13 +1064,13 @@ get.combine.info <- function(spikes, info.list, loc.est.all.events, tz){
     # earliest possible time that the event might have started
     start.diff <- event.start - tmp 
     start.diff <- ifelse(start.diff < 0, NA, start.diff)
-    start.bound <- spikes$time[tmp[which.min(start.diff)]] + minutes(1)
+    start.bound <- spikes$time[tmp[which.min(start.diff)]] + lubridate::minutes(1)
     
     # Find first time of information to be used as the "end bound", or the 
     # latest possible time that the event might have ended
     end.diff <- tmp - event.end 
     end.diff <- ifelse(end.diff < 0, NA, end.diff)
-    end.bound <- spikes$time[tmp[which.min(end.diff)]] - minutes(1)
+    end.bound <- spikes$time[tmp[which.min(end.diff)]] - lubridate::minutes(1)
     
     # Error handling if event is near the end of the time series
     if (length(end.bound) == 0){
@@ -1166,10 +1164,10 @@ get.combine.info <- function(spikes, info.list, loc.est.all.events, tz){
   } # end loop over events
   
   # Convert to date time objects
-  event.starts <- as_datetime(event.starts, tz = tz)
-  event.ends <-   as_datetime(event.ends,   tz = tz)
-  start.bounds <- as_datetime(start.bounds, tz = tz)
-  end.bounds <-   as_datetime(end.bounds,   tz = tz)
+  event.starts <- lubridate::as_datetime(event.starts, tz = tz)
+  event.ends <-   lubridate::as_datetime(event.ends,   tz = tz)
+  start.bounds <- lubridate::as_datetime(start.bounds, tz = tz)
+  end.bounds <-   lubridate::as_datetime(end.bounds,   tz = tz)
   
   # Save everything
   out <- list(event.starts = event.starts,
