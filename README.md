@@ -55,14 +55,14 @@ A key piece of working reliably with the `duration` package is the *structure of
   1. Read in the data:
 
 ```r
-> df <- list.files(system.file("input_data", package = "duration"), full.names = TRUE)
-> data <- readr::read_rds(df[1])
+df <- list.files(system.file("input_data", package = "duration"), full.names = TRUE)
+data <- readr::read_rds(df[1])
 ```
 
   2. Once read in, users can explore the data directly:
 
 ```r
-> head(data)
+head(data)
 ```
 
   3. Check out which objects are stored in the list for reference:
