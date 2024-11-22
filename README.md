@@ -3,6 +3,8 @@
 
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/duration)](http://cran.r-project.org/package=duration)
 [![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
+[![GitHub license](https://img.shields.io/github/license/Hammerling-Research-Group/duration?color=blue)](https://github.com/Hammerling-Research-Group/duration/blob/main/LICENSE)
+[![GitHub contributors](https://img.shields.io/github/contributors/Hammerling-Research-Group/duration.svg)](https://github.com/Hammerling-Research-Group/duration/graphs/contributors/)
 
 ## Estimating Methane Emission Durations
 
