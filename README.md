@@ -41,7 +41,7 @@ The default values are meant to allow for simple usage without the need for adju
 
 Available arguments for `estimate_durations()` include:
 
-  - `data`: Forward model output data stored as a list object. The format must match that of the sample input data in the `duration` package, or output data from other similar implementations, e.g., from `MAIN_1_simulate.R` in <https://github.com/wsdaniels/DLQ/> (*more details on data structure are in the following section*)
+  - `data`: Forward model output data stored as a list object. The format must match that of the sample input data in the `duration` package, or output data from other similar implementations, e.g., from [`MAIN_1_simulate.R`](https://github.com/wsdaniels/DLQ/) (*more details on data structure are in the following section*)
   - `tz`: Time zone. Default set to `America/Denver`
   - `directory`: Location where results output is saved. If not specified, a directory is created and the location is shared with the user
   - `events`: Print the number of events per year? Default set to `FALSE`
