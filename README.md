@@ -104,12 +104,10 @@ List of 9
   ..$ ESE: num [1:4001] 6.40e-69 2.46e-68 2.46e-68 1.97e-70 5.61e-117 ...
 ```
 
-*Note:* The sources (tank, separators, wellheads, etc.) will vary based on site-level details unique to users' contexts. But at a minimum, users can see that times (vector), sensor observations (data frame), wind data (vectors: direction/`WD` and speed/`WS`), and at least one source (data frame) are required to be in the list. 
-
-Specific information on each component of the input list is given below:
+5. Specific information about each component of the input list is given below:
 
 - `times`: Times of the CMS concentration data. Times must be at regular intervals, ideally every minute. Time information must be saved in a string format that can be read by the `as_datetime` function of the `lubridate` package, e.g., `"yyyy-mm-ddThh:mm:ss"`.
 - `obs`: CMS concentration observations. The rows of the data frame correspond to the `times` of the observations and the columns correspond to the different CMS sensor locations.
-- `WD`: Wind direction measurements in radiants. The length of this vector must match the length of `times`.
+- `WD`: Wind direction measurements in radians. The length of this vector must match the length of `times`.
 - `WS`: Wind speed measurements in m/s. The length of this vector must match the length of `times`.
 - `Tank`: Data frame containing simulated concentrations at the CMS sensor locations assuming that the tank is the emission source. The rows of the data frame correspond to the `times` of the simulated observations and the columns correspond to the different CMS sensor locations. A variable like `Tank` is required for all potential emission sources on the site.
