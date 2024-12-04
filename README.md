@@ -1,5 +1,5 @@
 # duration
-*Production code CMS duration estimation*
+*Production code CMS Duration Estimation*
 
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/duration)](http://cran.r-project.org/package=duration)
 [![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
