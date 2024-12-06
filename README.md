@@ -8,7 +8,7 @@
 
 ## Estimating Methane Emission Durations
 
-This repository contains code used to estimate methane emission durations using concentration observations from a network of point-in-space continuous monitoring systems. The scripts include: 
+This repository contains code used to estimate methane emission durations using concentration observations from a network of point-in-space continuous monitoring systems (CMS). The scripts include: 
 
   - `estimate_durations.R`: main code for estimating durations
   - `helpers.R`: suite of helper functions sourced internally in `estimate_durations()`
@@ -45,8 +45,8 @@ Available arguments for `estimate_durations()` include:
 
   - `data`: Forward model output data stored as a list object. The format must match that of the sample input data in the `duration` package, or output data from other similar implementations, e.g., from [`MAIN_1_simulate.R`](https://github.com/wsdaniels/DLQ/) (*more details on data structure are in the following section*)
   - `tz`: Time zone. Default set to `America/Denver`
-  - `directory`: Location where results output is saved. If not specified, a directory is created and the location is shared with the user
-  - `events`: Print the number of events per year? Default set to `FALSE`
+  - `directory`: Location where results are saved. If not specified, a directory is created and the location is shared with the user
+  - `events`: Print the number of events per year for a quick check? Default set to `FALSE`
   - `plot`: Return a plot of the distribution of average duration estimates by source? Default set to `FALSE`
   - `time`: Return the timing of the simulation? Default set to `TRUE`
 
@@ -64,7 +64,7 @@ data <- readr::read_rds(df[1])
   2. Once read in, users can explore the data directly:
 
 ```r
-head(data)
+View(data)
 ```
 
   3. Check out which objects are stored in the list for reference:

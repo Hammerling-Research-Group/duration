@@ -1,4 +1,4 @@
-#' @title Estimate emission durations using CMS, accounting for CMS non-detect times
+#' @title Estimate emission durations using continuous monitoring systems (CMS), accounting for CMS non-detect times
 #' 
 #' @usage estimate_durations(data, tz, directory, events, plot, time)
 #' @param data List. Forward model output data. The format must match that of the sample (default) shortened data from the 2023 ADED controlled release experiment, which is released with the \code{duration} package.
@@ -68,7 +68,7 @@ estimate_durations <- function(data = system.file("input_data/ADED2023_short.rds
 
   cli::cli_alert_success("Complete")
 
-  cli::cli_h1("Identifying naive events & creating localization + quantification estimates for each")
+  cli::cli_h1("Identifying naive events & creating localization + quantification estimates for each event")
 
 # STEP 3: IDENTIFY NAIVE EVENTS
 
