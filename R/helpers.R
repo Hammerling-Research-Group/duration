@@ -196,7 +196,7 @@ plot_durations <- function(durations_list, type = c("histogram", "density")) {
       ggplot2::geom_histogram(binwidth = 1, color = "black", alpha = 0.7) +
       ggplot2::facet_wrap(~ Source) +
       ggplot2::labs(title = "Distribution of Average Durations by Source",
-                    x = "Average Duration",
+                    x = "Average Duration (Hours)",
                     y = "Frequency",
                     fill = "Source") +
       ggplot2::theme_bw()
@@ -205,7 +205,7 @@ plot_durations <- function(durations_list, type = c("histogram", "density")) {
       ggplot2::geom_density(color = "black", alpha = 0.7) +
       ggplot2::facet_wrap(~ Source) +
       ggplot2::labs(title = "Distribution of Average Durations by Source",
-                    x = "Average Duration",
+                    x = "Average Duration (Hours)",
                     y = "Density",
                     fill = "Source") +
       ggplot2::theme_bw()
