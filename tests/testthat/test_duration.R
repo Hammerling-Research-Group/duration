@@ -1,8 +1,5 @@
 library(testthat)
 library(lubridate)
-library(devtools)
-
-devtools::load_all()
 
 ##
 ## SIM DATA (mirroring toy set from duration code)
