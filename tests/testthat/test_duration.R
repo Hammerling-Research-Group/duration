@@ -1,5 +1,6 @@
 library(testthat)
 library(lubridate)
+library(devtools)
 
 devtools::load_all()
 
