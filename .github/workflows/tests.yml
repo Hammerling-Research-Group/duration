@@ -21,6 +21,7 @@ jobs:
 
       - name: Install dependencies
         run: |
+          Rscript -e 'install.packages("remotes")'
           Rscript -e 'if (file.exists("DESCRIPTION")) remotes::install_deps(dependencies = TRUE)'
 
       - name: Run tests
