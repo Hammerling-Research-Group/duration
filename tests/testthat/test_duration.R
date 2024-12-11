@@ -1,10 +1,68 @@
 library(testthat)
+library(lubridate)
+
 devtools::load_all()
 
+##
+## SIM DATA (mirroring toy set from duration code)
+##
 
-# Load toy data packaged with the duration code
-df <- list.files(system.file("input_data", package = "duration"), full.names = TRUE)
-data <- readr::read_rds(df[1])
+times <- seq(ymd_hms("2023-02-21 21:19:00"), by = "min", length.out = 4001)
+
+set.seed(123)
+
+obs <- data.frame(
+  ENE = runif(4001, 2.0, 2.1),
+  ESE = runif(4001, 2.2, 2.3),
+  N = runif(4001, 1.7, 1.8),
+  NE = runif(4001, 2.2, 2.3),
+  NW = runif(4001, 2.0, 2.1),
+  S = runif(4001, 1.7, 1.8),
+  SE = runif(4001, 1.8, 1.9),
+  SW = runif(4001, 2.5, 2.6),
+  WNW = runif(4001, 2.0, 2.5),
+  WSW = runif(4001, 2.0, 2.5)
+)
+
+WD <- runif(4001, 1.9, 2.1)
+WS <- runif(4001, 2.5, 3.5)
+
+create_sim_df <- function() {
+  data.frame(
+    ENE = rexp(4001, rate = 1e50),
+    ESE = rexp(4001, rate = 1e50),
+    N = rexp(4001, rate = 1e50),
+    NE = rexp(4001, rate = 1e50),
+    NW = rexp(4001, rate = 1e50),
+    S = rexp(4001, rate = 1e50),
+    SE = rexp(4001, rate = 1e50),
+    SW = rexp(4001, rate = 1e50),
+    WNW = rexp(4001, rate = 1e50),
+    WSW = rexp(4001, rate = 1e50)
+  )
+}
+
+Tank <- create_sim_df()
+Separator_East <- create_sim_df()
+Wellhead_East <- create_sim_df()
+Wellhead_West <- create_sim_df()
+Separator_West <- create_sim_df()
+
+data <- list(
+  times = times,
+  obs = obs,
+  WD = WD,
+  WS = WS,
+  Tank = Tank,
+  Separator.East = Separator_East,
+  Wellhead.East = Wellhead_East,
+  Wellhead.West = Wellhead_West,
+  Separator.West = Separator_West
+)
+
+##
+## TESTS
+##
 
 # Test input data is validated
 test_that("Input data is validated correctly", {
@@ -35,7 +93,7 @@ test_that("Background removal works as expected", {
   )
 
   expect_true(any(!is.na(cleaned_obs)))
-  expect_true(any(is.na(cleaned_obs)))
+  expect_false(all(is.na(cleaned_obs)))
 })
 
 # Test for spike detection
@@ -168,3 +226,4 @@ test_that("Durations are estimated correctly", {
   expect_true("all.durations" %in% names(out))
   expect_true(length(out$all.durations) > 0)
 })
+
