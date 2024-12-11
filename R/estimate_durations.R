@@ -38,8 +38,14 @@ estimate_durations <- function(data = system.file("input_data/ADED2023_short.rds
       
   cli::cli_h1("Reading & cleaning data")
 
-  data <- suppressWarnings(readr::read_rds(data))
+  #data <- suppressWarnings(readr::read_rds(data))
 
+  if (is.character(data)) {
+    data <- suppressWarnings(readr::read_rds(data))
+  } else if (!is.list(data)) {
+    stop("The input data must be a list. Please provide a list object containing the required data.")
+  }
+  
   # check if input data is a list; throw error if it's not
   if (!is.list(data)) {
     stop("The input data must be a list. Please provide a list object containing the required data.")
@@ -79,6 +85,10 @@ estimate_durations <- function(data = system.file("input_data/ADED2023_short.rds
   spikes <- perform.event.detection(times, max.obs, gap.time = 30, length.threshold = 15)
   event.nums <- na.omit(unique(spikes$events))
   n.ints <- length(event.nums)
+  
+  if (is.null(spikes$events) || all(is.na(spikes$events))) {
+    stop("No events detected in the spikes object. Check input data.")
+  }
 
 # STEP 4: CREATE LOCALIZATION AND QUANTIFICATION ESTIMATES FOR EACH NAIVE EVENT
 
@@ -196,7 +206,7 @@ estimate_durations <- function(data = system.file("input_data/ADED2023_short.rds
 
   output_path <- file.path(output_dir, "duration_estimates.rds")
   readr::write_rds(duration_estimates, output_path)
-
+  
   cli::cli_alert_success("Complete")
   
     }

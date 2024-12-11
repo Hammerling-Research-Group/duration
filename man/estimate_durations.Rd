@@ -2,7 +2,7 @@
 % Please edit documentation in R/estimate_durations.R
 \name{estimate_durations}
 \alias{estimate_durations}
-\title{Estimate emission durations using CMS, accounting for CMS non-detect times}
+\title{Estimate emission durations using continuous monitoring systems (CMS), accounting for CMS non-detect times}
 \usage{
 estimate_durations(data, tz, directory, events, plot, time)
 }
@@ -23,7 +23,7 @@ estimate_durations(data, tz, directory, events, plot, time)
 Listed output of estimated durations by emission source. Saved in a newly created directory (\code{Results Output}).
 }
 \description{
-Estimate emission durations using CMS, accounting for CMS non-detect times
+Estimate emission durations using continuous monitoring systems (CMS), accounting for CMS non-detect times
 }
 \examples{
 estimate_durations(directory = "Desktop", plot = TRUE)

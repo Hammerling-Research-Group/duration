@@ -659,14 +659,27 @@ perform.event.detection <- function(times, max.obs, gap.time, length.threshold){
   count <- 0
   
   # Loop through spike points, if last point was not a spike, increase counter
-  for (i in spike.points){
+  
+  ## ORIGINAL (throws error in testing when encountering cases of i == 1)
+  #for (i in spike.points){
+  #  
+  #if (is.na(spikes$events[i-1])){
+  #    count <- count + 1
+  #    spikes$events[i] <- count
+  #  } else {
+  #    spikes$events[i] <- count
+  #  }
+  #}
+  
+  for (i in spike.points) {
     
-    if (is.na(spikes$events[i-1])){
+  if (i == 1 || is.na(spikes$events[i - 1])) {  # handle first iteration explicitly
       count <- count + 1
       spikes$events[i] <- count
     } else {
       spikes$events[i] <- count
     }
+    
   }
   
   # Get integers that uniquely define the different events
