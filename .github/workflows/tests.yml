@@ -1,4 +1,4 @@
-name: R Tests
+name: CI tests
 
 on:
   push:
