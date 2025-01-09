@@ -21,12 +21,6 @@ jobs:
 
       - name: Install dependencies
         run: |
-          Rscript -e 'install.packages("testthat")'
-          Rscript -e 'install.packages("zoo")'
-          Rscript -e 'install.packages("lubridate")'
-          Rscript -e 'install.packages("readr")'
-          Rscript -e 'install.packages("ggplot2")'
-          Rscript -e 'install.packages("cli")'
           Rscript -e 'install.packages("devtools")'
      
       - name: Run tests
