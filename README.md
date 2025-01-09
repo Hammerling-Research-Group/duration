@@ -1,7 +1,8 @@
 # duration
 *Production code CMS Duration Estimation*
 
-[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![Spell Check](https://github.com/Hammerling-Research-Group/duration/actions/workflows/spellcheck.yml/badge.svg)](https://github.com/Hammerling-Research-Group/duration/actions/workflows/spellcheck.yml)
+[![CI lint](https://github.com/Hammerling-Research-Group/duration/actions/workflows/lint.yml/badge.svg)](https://github.com/Hammerling-Research-Group/duration/actions/workflows/lint.yml)
 [![CI tests](https://github.com/Hammerling-Research-Group/duration/actions/workflows/tests.yml/badge.svg)](https://github.com/Hammerling-Research-Group/duration/actions/workflows/tests.yml)
 [![GitHub license](https://img.shields.io/github/license/Hammerling-Research-Group/duration?color=blue)](https://github.com/Hammerling-Research-Group/duration/blob/main/LICENSE)
 [![GitHub contributors](https://img.shields.io/github/contributors/Hammerling-Research-Group/duration.svg)](https://github.com/Hammerling-Research-Group/duration/graphs/contributors/)
