@@ -19,5 +19,4 @@ jobs:
           sudo apt-get install -y codespell
 
       - name: Run spell checker
-        run: |
-          codespell --ignore-words ".codespell-ignore-words" --words-white-list "ADED" .
+        run: codespell --ignore-words-list "ADED,df,ggplot,roxygen,dplyr,tibble,dataframe,init,hist,ths" .
