@@ -1,7 +1,8 @@
 # duration
 *Production code CMS Duration Estimation*
 
-[![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![CI tests](https://github.com/Hammerling-Research-Group/duration/actions/workflows/tests.yml/badge.svg)](https://github.com/Hammerling-Research-Group/duration/actions/workflows/tests.yml)
 [![GitHub license](https://img.shields.io/github/license/Hammerling-Research-Group/duration?color=blue)](https://github.com/Hammerling-Research-Group/duration/blob/main/LICENSE)
 [![GitHub contributors](https://img.shields.io/github/contributors/Hammerling-Research-Group/duration.svg)](https://github.com/Hammerling-Research-Group/duration/graphs/contributors/)
 
