@@ -20,5 +20,4 @@ jobs:
 
       - name: Run spell checker
         run: |
-          # Ignore common R-specific words like "df", "plot", "ADED", etc.
-          codespell --ignore-words-list "ADED,df,ggplot,roxygen,dplyr,tibble,dataframe,init,hist,ADED,ths" .
+          codespell --ignore-words ".codespell-ignore-words" .
