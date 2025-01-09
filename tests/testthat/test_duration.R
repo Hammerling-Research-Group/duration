@@ -113,7 +113,7 @@ test_that("Spike detection identifies naive events", {
   expect_equal(length(times), length(max_obs))
   expect_true(all(!is.na(max_obs)))
 
-  spikes <- perform.event.detection(
+  spikes <- perform.event.detection.alt(
     times = times,
     max.obs = max_obs,
     gap.time = 30,
@@ -134,7 +134,7 @@ test_that("Localization estimates are computed correctly", {
   sims <- data[5:length(data)]
   max_obs <- apply(obs, 1, max, na.rm = TRUE)
   
-  spikes <- perform.event.detection(
+  spikes <- perform.event.detection.alt(
     times = times,
     max.obs = max_obs,
     gap.time = 30,
@@ -157,7 +157,7 @@ test_that("Quantification estimates are computed correctly", {
   sims <- data[5:length(data)]
   max_obs <- apply(obs, 1, max, na.rm = TRUE)
   
-  spikes <- perform.event.detection(
+  spikes <- perform.event.detection.alt(
     times = times,
     max.obs = max_obs,
     gap.time = 30,
@@ -190,7 +190,7 @@ test_that("Durations are estimated correctly", {
   max_obs <- apply(obs, 1, max, na.rm = TRUE)
   info.list <- create.info.mask(times, sims, gap.time = 0, length.threshold = 15)
   
-  spikes <- perform.event.detection(
+  spikes <- perform.event.detection.alt(
     times = times,
     max.obs = max_obs,
     gap.time = 30,

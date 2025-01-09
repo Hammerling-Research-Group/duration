@@ -699,6 +699,95 @@ perform.event.detection <- function(times, max.obs, gap.time, length.threshold){
 }
 
 
+#' @title Create naive emission durations that do not account for CMS non-detect times
+#'        (Alt version for direct handling of first obs for testing with toy data) 
+#' @export
+perform.event.detection.alt <- function(times, max.obs, gap.time, length.threshold){
+  # Create data frame with time steps and event mask
+  spikes <- data.frame(time = times, events = max.obs > 0)
+  
+  # Find gaps between events that are shorter than gap.time and turn them into events
+  #   to.replace holds the indices that need to be switched from F to T
+  #   first.gap is an indicator for the first gap (which should not be replaced,
+  #   regardless of length)
+  #   false.seq holds the indices of each sequence of FALSEs (non-events)
+  to.replace <- c()
+  first.gap <- T
+  false.seq <- c()
+  
+  # Loop through times
+  for (i in 1:length(times)){
+    
+    # If not a spike, add index to false.sequence
+    if (!spikes$events[i]){
+      false.seq <- c(false.seq, i)
+      
+      # Otherwise, check length of false sequence, if greater than gap time,
+      # save those indices to replace later
+    } else if (spikes$events[i]){
+      
+      if (length(false.seq) <= gap.time & !first.gap){
+        to.replace <- c(to.replace, false.seq)
+      }
+      
+      first.gap <- F
+      false.seq <- c()
+    }
+  }
+  
+  # Replace gaps shorter than gap.time with T (meaning they are in an event)
+  spikes$events[to.replace] <- T
+  
+  # Now we replace the T/F with an integer to distinguish between events
+  # Start by replacing F with NA and T with zero
+  spikes$events[!spikes$events] <- NA
+  spikes$events[spikes$events] <- 0
+  
+  # Get indices of spikes
+  spike.points <- which(!is.na(spikes$events))
+  count <- 0
+  
+  # Loop through spike points, if last point was not a spike, increase counter
+  
+  ## ORIGINAL (throws error in testing when encountering cases of i == 1)
+  #for (i in spike.points){
+  #  
+  #  if (is.na(spikes$events[i-1])){
+  #    count <- count + 1
+  #    spikes$events[i] <- count
+  #  } else {
+  #    spikes$events[i] <- count
+  #  }
+  #}
+  
+  ## NEW ALT
+  for (i in spike.points) {
+    
+  if (i == 1 || is.na(spikes$events[i - 1])) {  # handle first iteration explicitly
+      count <- count + 1
+      spikes$events[i] <- count
+    } else {
+      spikes$events[i] <- count
+    }
+    
+  }
+  
+  # Get integers that uniquely define the different events
+  event.nums <- na.omit(unique(spikes$events))
+  
+  # Filter events by the length threshold
+  for (i in 1:length(event.nums)){
+    this.spike <- which(spikes$events == event.nums[i])
+    
+    if (length(this.spike) < length.threshold){
+      spikes$events[this.spike] <- NA
+    }
+  }
+  
+  return(spikes)
+  
+}
+
 
 #' @title Estimate emission source for each naive event
 #' @export
