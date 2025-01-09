@@ -20,4 +20,4 @@ jobs:
 
       - name: Run spell checker
         run: |
-          codespell --ignore-words ".codespell-ignore-words" .
+          codespell --ignore-words ".codespell-ignore-words" --words-white-list "ADED" .
