@@ -4,13 +4,27 @@ template:
   bootstrap: 5
 
 reference:
-  - title: "Estimating Durations"
+  - title: "Estimating Emission Durations"
     contents:
       - estimate_durations
 
   - title: "Helpers"
     contents:
       - remove.background
+      - create.info.mask
+      - find.spikes
+      - get.combine.info
+      - get.durations
+      - get.event.counts
+      - get.sensor.arrangement
+      - lseq
+      - perform.event.detection
+      - perform.event.detection.alt
+      - perform.localization
+      - perform.quantification
+      - plot_durations
+      - scale.sims
+      - using_packages
 
 articles:
   - title: Getting Started
