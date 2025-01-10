@@ -16,4 +16,3 @@ articles:
   - title: Getting Started
     navbar: ~
     contents:
-      - check_model_practical
