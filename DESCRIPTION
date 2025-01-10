@@ -24,7 +24,7 @@ Suggests:
     tools,
     prettyunits,
     testthat (>= 3.0.0)
-URL: https://github.com/Hammerling-Research-Group/duration
+URL: https://github.com/Hammerling-Research-Group/duration, https://hammerling-research-group.github.io/duration/
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Config/testthat/edition: 3
