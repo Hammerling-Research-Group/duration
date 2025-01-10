@@ -38,8 +38,6 @@ estimate_durations <- function(data = system.file("input_data/ADED2023_short.rds
       
   cli::cli_h1("Reading & cleaning data")
 
-  #data <- suppressWarnings(readr::read_rds(data))
-
   if (is.character(data)) {
     data <- suppressWarnings(readr::read_rds(data))
   } else if (!is.list(data)) {
