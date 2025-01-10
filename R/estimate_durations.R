@@ -13,7 +13,9 @@
 #' 
 #' @export
 #' @examples
+#' \dontrun{
 #' estimate_durations(directory = "Desktop", plot = TRUE)
+#' }
 estimate_durations <- function(data = system.file("input_data/ADED2023_short.rds", package = "duration"),
                                tz = "America/Denver",
                                directory = NULL,
