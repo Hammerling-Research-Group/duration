@@ -3,6 +3,7 @@
 
 [![CI lint](https://github.com/Hammerling-Research-Group/duration/actions/workflows/lint.yml/badge.svg)](https://github.com/Hammerling-Research-Group/duration/actions/workflows/lint.yml)
 [![CI tests](https://github.com/Hammerling-Research-Group/duration/actions/workflows/cov.yml/badge.svg)](https://github.com/Hammerling-Research-Group/duration/actions/workflows/cov.yml)
+[![Check Link Rot](https://github.com/Hammerling-Research-Group/duration/actions/workflows/check-link-rot.yaml/badge.svg)](https://github.com/Hammerling-Research-Group/duration/actions/workflows/check-link-rot.yaml)
 [![GitHub license](https://img.shields.io/github/license/Hammerling-Research-Group/duration?color=blue)](https://github.com/Hammerling-Research-Group/duration/blob/main/LICENSE)
 [![GitHub contributors](https://img.shields.io/github/contributors/Hammerling-Research-Group/duration.svg)](https://github.com/Hammerling-Research-Group/duration/graphs/contributors/)
 
