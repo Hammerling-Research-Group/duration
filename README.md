@@ -1,5 +1,5 @@
 # duration
-*Production code CMS Duration Estimation*
+*Production code for CMS Duration Estimation*
 
 [![CI lint](https://github.com/Hammerling-Research-Group/duration/actions/workflows/lint.yml/badge.svg)](https://github.com/Hammerling-Research-Group/duration/actions/workflows/lint.yml)
 [![CI tests](https://github.com/Hammerling-Research-Group/duration/actions/workflows/cov.yml/badge.svg)](https://github.com/Hammerling-Research-Group/duration/actions/workflows/cov.yml)
