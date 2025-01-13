@@ -1,0 +1,9 @@
+on:
+  pull_request:
+    branches: [main, master]
+
+name: check-link-rot
+
+jobs:
+  check-link-rot:
+    uses: duration/.github/workflows/check-link-rot.yaml@main
